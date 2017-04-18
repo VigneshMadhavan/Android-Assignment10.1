@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 
 
 import android.view.animation.BounceInterpolator;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -30,7 +31,7 @@ import org.w3c.dom.Text;
 
 public class MyAlert extends DialogFragment implements View.OnClickListener,Animator.AnimatorListener {
 
-    private AppCompatImageButton okBtn;
+    private ImageButton okBtn;
     private TextView title,msg;
     private Communicator communicator;
     public static final String TAG="MyAlert";
@@ -99,7 +100,7 @@ public class MyAlert extends DialogFragment implements View.OnClickListener,Anim
 
         title=(TextView) view.findViewById(R.id.alertTitle);
         msg=(TextView) view.findViewById(R.id.alertMsg);
-        okBtn=(AppCompatImageButton) view.findViewById(R.id.okBtn);
+        okBtn=(ImageButton) view.findViewById(R.id.okBtn);
         okBtn.setOnClickListener(MyAlert.this);
 
 
@@ -119,7 +120,7 @@ public class MyAlert extends DialogFragment implements View.OnClickListener,Anim
                 ViewAnimationUtils.createCircularReveal(view,
                         centerX, centerY, initialRadius, 0);
         anim.setDuration(1000);
-        //anim.setInterpolator(new BounceInterpolator());
+        anim.setInterpolator(new BounceInterpolator());
         anim.addListener(MyAlert.this);
         anim.start();
     }
@@ -130,6 +131,7 @@ public class MyAlert extends DialogFragment implements View.OnClickListener,Anim
     public void onClick(View v) {
         communicator= (Communicator) getContext();
         communicator.onConfirmed();
+        okBtn.setVisibility(View.INVISIBLE);
         doExitReveal(vi);
         //dismiss();
     }
